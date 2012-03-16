@@ -14,6 +14,8 @@ module QRCodeMagick
   
   def self.draw(string, *args)
     self.parse_options(args)
+    qrcode = RQRCode::QRCode.new(string, :size => OPTS[:size], :level => OPTS[:level])
+    OPTS[:drawing] = self.generate_drawing(qrcode, OPTS[:drawing], OPTS[:scale])
   end
   
   private
@@ -25,5 +27,19 @@ module QRCodeMagick
         OPTS[k] = v
       end
     end
+  end
+  
+  def self.generate_drawing(qrcode, drawing, scale)
+    offset = scale - 1
+    
+    qrcode.module_count.times do |row|
+      y = (row * scale) + scale
+      qrcode.module_count.times do |column|
+        x = (column * scale) + scale
+        drawing.rectangle(x, y, (x + offset), (y + offset)) if qrcode.is_dark(row, column)
+      end
+    end
+    
+    drawing
   end
 end
