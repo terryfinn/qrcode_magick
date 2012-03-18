@@ -7,9 +7,7 @@ module QRCodeMagick
   def self.draw(string, *args)
     opts = self.defaults
     self.parse_options(args, opts)
-    puts opts
     qrcode = RQRCode::QRCode.new(string, :size => opts[:size], :level => opts[:level])
-    puts "qrcode gen done"
     opts[:drawing] = self.generate_drawing(qrcode, opts[:drawing], opts[:scale])
   end
   
