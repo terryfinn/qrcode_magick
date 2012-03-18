@@ -40,7 +40,6 @@ module QRCodeMagick
   
   def self.generate_canvas(qrcode, scale, fill)
     canvas_side = (qrcode.module_count * scale) + (2 * scale)
-    puts "(#{qrcode.module_count} * #{scale}) + (2 * #{scale}) = #{canvas_side}"
     Magick::Image.new(canvas_side, canvas_side, fill)
   end
   
