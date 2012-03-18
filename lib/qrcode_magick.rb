@@ -7,6 +7,15 @@ module QRCodeMagick
   def self.draw(string, *args)
     opts = self.defaults
     self.parse_options(args, opts)
+    puts opts
+    qrcode = RQRCode::QRCode.new(string, :size => opts[:size], :level => opts[:level])
+    puts "qrcode gen done"
+    opts[:drawing] = self.generate_drawing(qrcode, opts[:drawing], opts[:scale])
+  end
+  
+  def self.draw_image (string, *args)
+    opts = self.defaults
+    self.parse_options(args, opts)
     qrcode = RQRCode::QRCode.new(string, :size => opts[:size], :level => opts[:level])
     opts[:drawing] = self.generate_drawing(qrcode, opts[:drawing], opts[:scale])
     opts[:canvas] = self.generate_canvas(qrcode, opts[:scale], opts[:fill]) unless opts[:canvas]
@@ -43,7 +52,7 @@ module QRCodeMagick
     Magick::Image.new(canvas_side, canvas_side, fill)
   end
   
-  def self.generate_drawing(qrcode, drawing, box_size)
+  def self.generate_drawing(qrcode, drawing, scale)
     offset = scale - 1
     
     qrcode.module_count.times do |row|
