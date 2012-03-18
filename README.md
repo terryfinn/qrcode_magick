@@ -7,8 +7,6 @@ QRCodeMagick is an easy to use gem that makes generating QRCodes and rendering t
 QRCodeMagick is very simple to use.  There are two basic methods: `draw` and `draw_image`.  Below is an example script that show how both methods work.
 
 ```ruby
-#!/usr/bin/env ruby
-
 require 'rubygems'
 require 'qrcode_magick'
 
